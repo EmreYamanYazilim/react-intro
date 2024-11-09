@@ -1,33 +1,52 @@
+
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const handleChange = () => {
+    setFirstName("10x yazılım react")
+  }
+  const arttir = () => {
+    setCount(count + 1)
+  }
+  const azalt = () => {
+    if (count>0) {
+      setCount(count-1)
+    }
+  }
+
+  const [firsName, setFirstName] = useState('emre');
+  const [Names, setNames] = useState(["ali", "mehmet", "ahmet"]);
+  const [userInfo, setUserInfo] = useState({ username: "Emre", passowrd: "123123" })
+  const [show, setShow] = useState(false)
+  const [count, setCount] = useState(0);
 
   return (
     <>
+      <div>{firsName}</div>
+      <button onClick={() => { setFirstName("yaman") }}>ismi değiştir</button>
+      <button onClick={handleChange}>ismi değiştir</button>
+
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {Names.map((names, index) => (
+          <div key={index}>{names}</div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div>Kullanıcı adı:  {userInfo.username} | kullanıcı şifre {userInfo.passowrd}</div>
+
+      <div>
+        {show ? <div>Kullanıcı adı:  {userInfo.username} | kullanıcı şifre {userInfo.passowrd}</div>
+          : <p>gösterme</p>}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <br></br>
+
+      <div>
+        {count}
+        <br/>
+        <button onClick={arttir}>Attır</button>
+        <button onClick={azalt}>Azalt</button>
+      </div>
     </>
   )
 }
