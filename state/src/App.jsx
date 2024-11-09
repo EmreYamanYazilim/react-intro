@@ -1,51 +1,41 @@
+import { useState, useEffect } from 'react'
 
-import { useState } from 'react'
 import './App.css'
 
 function App() {
 
-  const handleChange = () => {
-    setFirstName("10x yazılım react")
-  }
-  const arttir = () => {
-    setCount(count + 1)
-  }
-  const azalt = () => {
-    if (count>0) {
-      setCount(count-1)
-    }
-  }
 
-  const [firsName, setFirstName] = useState('emre');
-  const [Names, setNames] = useState(["ali", "mehmet", "ahmet"]);
-  const [userInfo, setUserInfo] = useState({ username: "Emre", passowrd: "123123" })
-  const [show, setShow] = useState(false)
-  const [count, setCount] = useState(0);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  //1. örnek
+  useEffect(() => {
+    console.log("her zaman çalışır");
+  })
+
+  //2. örnek
+  useEffect(() => {
+    console.log("ilk render edildiğinde çalışır ");
+
+  }, [])
+
+  //3. örnek
+  useEffect(() => {
+    console.log("ilk render edildiğinde ve firstname state değeri değiştinde çalışır ");
+
+  }, [firstName])
 
   return (
     <>
-      <div>{firsName}</div>
-      <button onClick={() => { setFirstName("yaman") }}>ismi değiştir</button>
-      <button onClick={handleChange}>ismi değiştir</button>
-
       <div>
-        {Names.map((names, index) => (
-          <div key={index}>{names}</div>
-        ))}
+        <button onClick={() => setFirstName("Emre yaman Yazılım")}>
+          first değiştir
+        </button>
       </div>
-      <div>Kullanıcı adı:  {userInfo.username} | kullanıcı şifre {userInfo.passowrd}</div>
-
       <div>
-        {show ? <div>Kullanıcı adı:  {userInfo.username} | kullanıcı şifre {userInfo.passowrd}</div>
-          : <p>gösterme</p>}
-      </div>
-      <br></br>
-
-      <div>
-        {count}
-        <br/>
-        <button onClick={arttir}>Attır</button>
-        <button onClick={azalt}>Azalt</button>
+        <button onClick={() => setLastName("10x hızında öğrenmeye kod yazmaya devam ")}>
+          last değiştir
+        </button>
       </div>
     </>
   )
