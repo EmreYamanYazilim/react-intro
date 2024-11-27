@@ -1,43 +1,32 @@
+import { useState } from "react";
 
-import './App.css'
-import Test from './components/Test.jsx'
-import { useState,useRef, forwardRef } from "react";
-
-  //input compnent olarak bu fn yazdık 
-  // function Input (props,ref) {
-  //   return <input ref={ref} type='text' {...props}/>
-  // }
-
-  // Input = forwardRef(Input)
-
-  // yada  alttaki gibi 
-  const Input = forwardRef((props,ref) => {
-    return <input ref={ref} type='text' {...props}/>
-
-  })
-
-function App() {
-
-  const [show, setShow] = useState(false);
 
 
 
-  const inputRef = useRef()
-  const focusInput = () => {
-    inputRef.current.focus()
+function App() {
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState('');
+  
+  const submitHandle = e => {
+    e.preventDefault()
+    setTodos([...todos,todo])  //! todos todoların tamamı ve sonra kendi eklediğimiz todoyu virgülden sonra koyduk
+    setTodo('')
   }
+  
 
   return (
     <>
-    <button onClick={() => setShow(show => !show)}>
-      {show ? 'göster' : 'gizle'}
-    </button>
-    {show && <Test/>}
+  <h1>Todo App</h1>
+  <form onSubmit={submitHandle}>
+    <input type="text" value={todo} onChange={e => setTodo(e.target.value)}/>
+    <button type="submit">Ekle</button>
+  </form>
+  <ul>
+    {todos.map((todo,index) => (
+    <li key={index}>{todo}</li>
+    ))}
+  </ul>
 
-
-    <h1> useRef - useForward</h1>
-    <Input ref={inputRef} />
-    <button onClick={focusInput}>focusla</button>
     </>
   )
 }
