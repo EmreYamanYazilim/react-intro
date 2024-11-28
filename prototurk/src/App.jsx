@@ -1,57 +1,59 @@
-import { useState,useReducer } from "react";
-
-//! reducer birtane fn alır  app içinde  sate dispatch belirlenir fn içinde state ve action geliyor 
-function reducerfn (state, action) {
-  console.log(state,action);
-  
-}
+import { useState, useMemo } from "react";
 
 
 function App() {
 
-  //! reducer 1 fn alır  ve 2. parametre olar initialState alır  iniclat state alsında alttaki todos ve todolar  altta onları yorum satırına alacağız  obje olarak alacağız  todos:[],todo:''  acalacağız
-  const [state, dispatch] = useReducer(reducerfn, {
-    todos:[],
-    todo:''
-  })
 
-  // const [todos, setTodos] = useState([]);
-  // const [todo, setTodo] = useState('');
-  
-  const submitHandle = e => {
-    e.preventDefault()
-    setTodos([...todos,todo])  //! todos todoların tamamı ve sonra kendi eklediğimiz todoyu virgülden sonra koyduk
-    setTodo('')
-  }
-  
-const dispatchOnChange = (e) => {
-  dispatch({
-    type:'SET_TODO',
-    value: e.target.value
-  })
-}
+  const genders = ['erkek', 'kadın']; // array olarak tanımlama 
+  // obje olarak tanımlamak istersek alltaki gibi 
+  const gendersObje =  [
+    {key:"1", value:"Erkek"},
+    {key:"2", value:"Kadın"}
+  ]
+  const [name, setName] = useState('emre');
+  const [description, setDescription] = useState('');
+  const [gender, setGender] = useState(2);
 
+  // const selectedGender = useMemo(() => {return genders[gender]}, [gender])
+  const selectedGender = genders[gender];
+  const selectedGenderObje = gendersObje.find(g => g.key == gender);
 
   return (
     <>
-  <h1>Todo App</h1>
-  <form onSubmit={submitHandle}>
-    {/* <input type="text" value={todo} onChange={e => setTodo(e.target.value)}/>
-    <button type="submit">Ekle</button> */}
-        {/* değişiklik olarak burda artık todo yerine satete.todo yazacağız  yukarıda input ve buttonu yorum satırına aldık reducer ile alttaki gibi devam edecek  */}
-        <input type="text" value={state.todo} onChange={dispatchOnChange}/>
-        <button type="submit">Ekle</button>
-  </form>
-  {/* <ul>
-    {todos.map((todo,index) => (
-    <li key={index}>{todo}</li>
-    ))}
-  </ul> */}
-  <ul>
-    {state.todos.map((todo,index) => (
-    <li key={index}>{todo}</li>
-    ))}
-  </ul>
+      <button onClick={() => setName('EmreYamanYazılım10x React <3')}>Değiştir</button>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <br />
+      {name}
+      <br />
+      <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+      <br />
+      {description}
+
+
+      <select value={gender} onChange={(e) => setGender(e.target.value)}>
+        <option value={''}>Seçin</option>
+        {genders.map((gender, index) => (
+          <option value={index} key={index}>{gender}</option>
+        ))}
+
+      </select>
+      <br />
+      {selectedGender}
+      <br />
+      <br />
+
+
+      {/* obje olarak option  */}
+      <select value={gender} onChange={(e) => setGender(e.target.value)}>
+        <option value={''}>Seçiniz</option>
+        {gendersObje.map((gender) => (
+        <option value={gender.key} key={gender.key}>{gender.value}</option>
+        ))}
+      </select>
+      <br />
+      <pre>
+        {JSON.stringify(selectedGenderObje,null,2)}
+      </pre>
 
     </>
   )
